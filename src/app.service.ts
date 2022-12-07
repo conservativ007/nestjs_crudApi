@@ -3,6 +3,7 @@ import { report } from 'process';
 import { ReportType, data } from './data.js';
 
 import { v4 as uuid } from 'uuid';
+import { ReportResponseDto } from './dtos/report.dto.js';
 
 export interface Report {
   amount: number;
@@ -16,18 +17,23 @@ export interface UpdateReport {
 
 @Injectable()
 export class AppService {
-  getAllReports(type: ReportType) {
-    return data.report.filter((report) => report.type === type);
-  }
-
-  getReportById(type: ReportType, id: string) {
-    // return data.report.filter((report) => report.id === id);
+  getAllReports(type: ReportType): ReportResponseDto[] {
     return data.report
       .filter((report) => report.type === type)
-      .find((report) => report.id === id);
+      .map((report) => new ReportResponseDto(report));
   }
 
-  createReport(type: ReportType, dataReport: Report) {
+  getReportById(type: ReportType, id: string): ReportResponseDto {
+    // return data.report.filter((report) => report.id === id);
+    const report = data.report
+      .filter((report) => report.type === type)
+      .find((report) => report.id === id);
+
+    if (!report) return;
+    return new ReportResponseDto(report);
+  }
+
+  createReport(type: ReportType, dataReport: Report): ReportResponseDto {
     const newReport = {
       id: uuid(),
       ...dataReport,
@@ -38,10 +44,10 @@ export class AppService {
 
     data.report.push(newReport);
 
-    return newReport;
+    return new ReportResponseDto(newReport);
   }
 
-  updateReport(id: string, body: UpdateReport) {
+  updateReport(id: string, body: UpdateReport): ReportResponseDto {
     let newReport;
 
     data.report = data.report.map((report) => {
@@ -56,7 +62,7 @@ export class AppService {
       }
       return report;
     });
-    return newReport;
+    return new ReportResponseDto(newReport);
   }
 
   deleteReport(id: string) {

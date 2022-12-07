@@ -8,6 +8,10 @@ async function bootstrap() {
     new ValidationPipe({
       // this option means the following: if someone passes incorrect params it'll be ignored
       whitelist: true,
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
   );
   await app.listen(3000);
