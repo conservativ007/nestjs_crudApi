@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "d5edcf46-4451-45a5-8aab-35dd4804da1b",
+		"name": "Expense App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14386193"
+	},
+	"item": [
+		{
+			"name": "Get All Reports",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/report/income",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"report",
+						"income"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Report",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Report",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/report/income",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"report",
+						"income"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Report",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/report/income/123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"report",
+						"income",
+						"123"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Report",
+			"request": {
+				"method": "DELETE",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get Summary",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/summary",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"summary"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
