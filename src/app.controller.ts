@@ -7,25 +7,30 @@ import {
   Param,
   Body,
   HttpCode,
+  ParseUUIDPipe,
+  ParseEnumPipe,
 } from '@nestjs/common';
 import { Data, data, ReportType } from './data';
 
 import { AppService, Report } from './app.service';
+import { CreateReportDto, UpdateReportDto } from './dtos/report.dto';
 
 @Controller('report/:type')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getAllReports(@Param('type') type: string) {
+  getAllReports(@Param('type', new ParseEnumPipe(ReportType)) type: string) {
     const reportType =
       type === 'income' ? ReportType.INCOME : ReportType.EXPENSE;
     return this.appService.getAllReports(reportType);
   }
 
   @Get(':id')
-  getIncomReportById(@Param('type') type: string, @Param('id') id: string) {
-    // if (!['income', 'expense'].includes(type)) return {};
+  getIncomReportById(
+    @Param('type', new ParseEnumPipe(ReportType)) type: string,
+    @Param('id', ParseUUIDPipe) id: string,
+  ) {
     const reportType =
       type === 'income' ? ReportType.INCOME : ReportType.EXPENSE;
     return this.appService.getReportById(reportType, id);
@@ -33,20 +38,25 @@ export class AppController {
 
   @Post()
   createReport(
-    @Param('type') type: ReportType,
-    @Body() { amount, source }: Report,
+    @Param('type', new ParseEnumPipe(ReportType)) type: ReportType,
+    @Body() { amount, source }: CreateReportDto,
   ) {
     return this.appService.createReport(type, { amount, source });
   }
 
   @Put(':id')
-  putReport(@Param('id') id: string, @Body() body: Report) {
+  updateReport(
+    @Param('type', new ParseEnumPipe(ReportType)) type: string,
+    @Param('id', ParseUUIDPipe)
+    id: string,
+    @Body() body: UpdateReportDto,
+  ) {
     return this.appService.updateReport(id, body);
   }
 
   @HttpCode(204)
   @Delete(':id')
-  deleteReport(@Param('id') id: string) {
+  deleteReport(@Param('id', ParseUUIDPipe) id: string) {
     return this.appService.deleteReport(id);
   }
 }

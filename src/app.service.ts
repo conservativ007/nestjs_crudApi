@@ -9,6 +9,11 @@ export interface Report {
   source: string;
 }
 
+export interface UpdateReport {
+  amount?: number;
+  source?: string;
+}
+
 @Injectable()
 export class AppService {
   getAllReports(type: ReportType) {
@@ -36,7 +41,7 @@ export class AppService {
     return newReport;
   }
 
-  updateReport(id: string, body: Report) {
+  updateReport(id: string, body: UpdateReport) {
     let newReport;
 
     data.report = data.report.map((report) => {
